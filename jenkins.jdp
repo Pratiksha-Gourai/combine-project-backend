@@ -1,23 +1,24 @@
 pipeline {
     agent any
-        stages{
-            stage ('pull'){
+    stages {
+        stage ('pull') {
                 steps {
                     git branch: 'dev', url: 'https://github.com/Pratiksha-Gourai/combine-project-backend.git'
                }
-            } stage ('build'){
-                steps {
+            } 
+        stage ('build') {
+            steps {
                      sh 'mvn clean package'
                 }
             }
-            stage ('deploy'){
-                steps {
-                    sh '''
-                        docker build . -t pratikshagourai/com-backend:latest
-                        docker push pratikshagourai/com-backend:latest
-                        docker rmi pratikshagourai/com-backend:latest
-                        kubectl apply -f ./yaml/
-                    '''
+        stage ('deploy') {
+           steps {
+               sh '''
+                  docker build . -t pratikshagourai/com-backend:latest
+                  docker push pratikshagourai/com-backend:latest
+                  docker rmi pratikshagourai/com-backend:latest
+                  kubectl apply -f ./yaml/
+                 '''
                 }
              }
 
